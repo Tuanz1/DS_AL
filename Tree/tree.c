@@ -45,61 +45,6 @@ void postOrder(BiTree t) {
   }
 }
 
-void preOrderNoRec(BiTree t) {
-  BiTree stack[50];
-  int top = -1;
-  while (t || top != -1) {
-    if (t) {
-      visit(*t);
-      stack[++top] = t;
-      t = t->lchild;
-    } else {
-      t = stack[top--]->rchild;
-    }
-  }
-}
-
-void inOrderNoRec(BiTree t) {
-  BiTree stack[50];
-  int top = -1;
-  while (t || top != -1) {
-    if (t) {
-      stack[++top] = t;
-      t = t->lchild;
-    } else {
-      t = stack[top--];
-      visit(*t);
-      t = t->rchild;
-    }
-  }
-}
-
-void postOrderNoRec(BiTree t) {
-  BiTree stack[50];
-  int top = -1;
-  // 标记最后访问的结点
-  BiTree lastVisit;
-  while (t || top != -1) {
-    // 一直遍历左子树
-    if (t) {
-      stack[++top] = t;
-      t = t->lchild;
-    } else {
-      t = stack[top];
-      // 右子树为空或者已经访问，则访问该节点，并且更新最后访问结点，跳出此次循环
-      if (!t->rchild || t->rchild == lastVisit) {
-        top--;
-        visit(*t);
-        lastVisit = t;
-        t = 0;
-        continue;
-      }
-      // 右子树存在且未访问则继续往右子树搜索
-      t = t->rchild;
-    }
-  }
-}
-
 void levelOrder(BiTree t) {
   BiTree queue[50];
   int front = 0, rear = 0;
@@ -114,4 +59,25 @@ void levelOrder(BiTree t) {
   }
 }
 
-int treeDepth(BiTree t) {}
+int treeDepth(BiTree t) {
+  if (t == NULL)
+    return 0;
+  if (t->lchild == NULL && t->rchild == NULL) {
+    return 1;
+  } else {
+    int l, r;
+    l = treeDepth(t->lchild);
+    r = treeDepth(t->rchild);
+    return l > r ? 1 + l : 1 + r;
+  }
+}
+
+int countLeaves(BiTree t) {
+  if (!t)
+    return 0;
+  if (t->lchild == NULL && t->rchild == NULL)
+    return 1;
+  int l = countLeaves(t->lchild);
+  int r = countLeaves(t->rchild);
+  return l + r;
+}

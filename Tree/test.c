@@ -10,12 +10,16 @@ int main() {
   inOrder(t);
   printf("\n后顺遍历\n");
   postOrder(t);
-  printf("\n非递归前序遍历\n");
-  preOrderNoRec(t);
-  printf("\n非递归中序遍历\n");
-  inOrderNoRec(t);
-  printf("\n非递归后序遍历\n");
-  postOrderNoRec(t);
+  // printf("\n非递归前序遍历\n");
+  // preOrderNoRec(t);
+  // printf("\n非递归中序遍历\n");
+  // inOrderNoRec(t);
+  // printf("\n非递归后序遍历\n");
+  // postOrderNoRec(t);
   printf("\n层次遍历\n");
   levelOrder(t);
+  int depth = treeDepth(t);
+  printf("\n树的深度: %d\n", depth);
+  int leaves = countLeaves(t);
+  printf("\n树的叶子总数: %d\n", leaves);
 }
