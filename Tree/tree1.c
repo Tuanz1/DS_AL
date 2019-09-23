@@ -58,25 +58,27 @@ void inOrder(BiTree t) {
 void postOrder(BiTree t) {
   BiTree stack[50];
   int top = -1;
+  BiTree p;
+  p = t;
   // 标记最后访问的结点
   BiTree lastVisit;
-  while (t || top != -1) {
+  while (p || top != -1) {
     // 一直遍历左子树
-    if (t) {
-      stack[++top] = t;
-      t = t->lchild;
+    if (p) {
+      stack[++top] = p;
+      p = p->lchild;
     } else {
-      t = stack[top];
+      p = stack[top];
       // 右子树为空或者已经访问，则访问该节点，并且更新最后访问结点，跳出此次循环
-      if (!t->rchild || t->rchild == lastVisit) {
+      if (!p->rchild || p->rchild == lastVisit) {
         top--;
-        visit(*t);
-        lastVisit = t;
-        t = 0;
-        continue;
+        visit(*p);
+        lastVisit = p;
+        p = 0;
+        continue; // 如果访问该节点，则说明，它之后的结点已经访问，不要遍历右子树，直接下一个循环
       }
       // 右子树存在且未访问则继续往右子树搜索
-      t = t->rchild;
+      p = p->rchild;
     }
   }
 }

@@ -20,6 +20,6 @@ int main() {
   levelOrder(t);
   int depth = treeDepth(t);
   printf("\n树的深度: %d\n", depth);
-  int leaves = countLeaves(t);
-  printf("\n树的叶子总数: %d\n", leaves);
+  // int leaves = countLeaves(t);
+  // printf("\n树的叶子总数: %d\n", leaves);
 }

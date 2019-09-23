@@ -21,10 +21,15 @@ typedef struct LinkedNode {
 LinkedNode *input();
 // 往队列中插入结点，并且保证队列依然递增
 void inQueue(LinkedNode *head, LinkedNode *node);
+// 优先队列出队
+LinkedNode *deQueue(LinkedNode *head);
 // 遍历队列，检查是否递增
 void traverse(LinkedNode *head);
+// 构造树的结点
+TreeNode *createTreeNode(char code, int weight, TreeNode *left,
+                         TreeNode *right);
 // 构造哈弗曼树
-void createHFMTree();
+TreeNode *createHFMTree(LinkedNode *head);
 //  输出每个字符对应的哈弗曼编码
 void hfmCode(TreeNode *tree, int length);
 #endif

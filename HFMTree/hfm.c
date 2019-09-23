@@ -54,8 +54,17 @@ void traverse(LinkedNode *head) {
     printf("Char:%c, Weight:%d\n", tmp->code, tmp->weight);
   }
 }
-
-TreeNode *creatHFMTree(LinkedNode *head) {
+TreeNode *createTreeNode(char code, int weight, TreeNode *left,
+                         TreeNode *right) {
+  TreeNode *node;
+  node = (TreeNode *)malloc(sizeof(TreeNode));
+  node->code = code;
+  node->weight = weight;
+  node->lchild = left;
+  node->rchild = right;
+  return node;
+}
+TreeNode *createHFMTree(LinkedNode *head) {
   LinkedNode *tmp;
   tmp = head;
   LinkedNode *p, *q;
@@ -65,39 +74,22 @@ TreeNode *creatHFMTree(LinkedNode *head) {
     // 取出队列中权重最小的元素
     p = deQueue(head);
     q = deQueue(head);
-
     // 如果p, q 为叶子结点，则需要为期构造node
     if (p->code != ' ') {
-      node = (TreeNode *)malloc(sizeof(TreeNode));
-      node->weight = p->weight;
-      node->code = p->code;
-      node->lchild = NULL;
-      node->rchild = NULL;
-      p->node = node;
+      p->node = createTreeNode(p->code, p->weight, NULL, NULL);
     }
     if (q->code != ' ') {
-      node = (TreeNode *)malloc(sizeof(TreeNode));
-      node->weight = q->weight;
-      node->code = q->code;
-      node->lchild = NULL;
-      node->rchild = NULL;
-      q->node = node;
+      q->node = createTreeNode(q->code, q->weight, NULL, NULL);
     }
     // 构造p, q 的根结点，并且将新构造的root结点入队
-    root = (TreeNode *)malloc(sizeof(TreeNode));
-    root->weight = p->weight + q->weight;
-    root->code = ' ';
-    root->lchild = p->node;
-    root->rchild = q->node;
+    root = createTreeNode(' ', p->weight + q->weight, p->node, q->node);
     tmp = (LinkedNode *)malloc(sizeof(LinkedNode));
     tmp->code = ' ';
     tmp->weight = root->weight;
     tmp->node = root;
-    // printf("p:%c, q:%c\n", p->code, q->code);
     free(p);
     free(q);
     inQueue(head, tmp);
-    // traverse(head);
   }
   return root;
 }
@@ -133,7 +125,7 @@ int main() {
   head = input();
   //   traverse(head);
   TreeNode *root;
-  root = creatHFMTree(head);
+  root = createHFMTree(head);
   hfmCode(root, 0);
   //   preOrder(root);
 }
