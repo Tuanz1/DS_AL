@@ -3,8 +3,6 @@
 #include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
-// cx 左边　cy右边
-int cx[MAX_INT], cy[MAX_INT];
 int visit[MAX_INT];
 int match[MAX_INT];
 bool dfs(Graph *g, int x) {
@@ -41,4 +39,17 @@ int main() {
   g = (Graph *)malloc(sizeof(Graph));
   CreateGraph(g);
   printf("最大匹配数为:%d\n", maxmatch(g));
+  int out[g->n];
+  for(int i =0;i<g->n;i++){
+		  if(!visit[i]){
+				  visit[i]=1;
+				  visit[match[i]] = 1;
+		  		  int index = i/5;
+		  		  int offset = match[i]%5+1;
+		  if(index==1)
+		  printf("X%d--Y%d\n",i%5+1, offset);
+		 else 
+				 printf("Y%d--X%d\n",i%5+1,offset);
+		  }
+  }
 }
